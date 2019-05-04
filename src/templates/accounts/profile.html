@@ -1,0 +1,67 @@
+{% extends "base/layout.html" %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+
+<div class="card-area">
+    <p>{{ user.username }} | {{ user.email }} </p>
+    <p>Rank: {{ user.profile.rankStr }}</p>
+
+    {% if user.mfa.enabled != True %}
+
+    <div class="alert alert-danger" role="alert">
+        WARNING! You need to
+        <a href="{% url 'accounts:mfa'  %}" class="btn btn-outline-danger">Generate Key & Enable MFA</a>,
+        otherwise you will NOT be able to login!
+    </div>
+
+    {% else %}
+
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="26" height="26" viewBox="0 0 192 192"
+        style=" fill:#000000;">
+        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter"
+            stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none"
+            font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+            <path d="M0,192v-192h192v192z" fill="none"></path>
+            <g fill="#ffffff">
+                <g id="surface1">
+                    <path
+                        d="M36,0c-19.875,0 -36,16.125 -36,36v120c0,19.875 16.125,36 36,36h120c19.875,0 36,-16.125 36,-36v-120c0,-19.875 -16.09615,-36 -36,-36zM36,14.76923h120c11.71154,0 21.23077,9.51923 21.23077,21.23077v120c0,11.71154 -9.51923,21.23077 -21.23077,21.23077h-120c-11.71153,0 -21.23077,-9.51923 -21.23077,-21.23077v-120c0,-11.71153 9.51923,-21.23077 21.23077,-21.23077zM141.69231,34.15385c-1.78846,0.34615
+                        -3.51923,1.38462 -4.61538,3l-57.69231,85.15385l-26.76923,-26.53846c-2.76923,-2.76923 -7.125,-2.76923 -9.92308,0l-10.15385,10.15385c-2.79808,2.76923 -2.79808,7.38462 0,10.15385l40.84615,40.84615c2.30769,2.27885 6,3.92308 9.23077,3.92308c3.23077,0 6.43269,-2.01923 8.53846,-5.07692l69.46154,-102.46154c2.22115,-3.23077 1.41346,-7.73077 -1.84615,-9.92308l-11.76923,-8.07692c-1.61538,-1.09615 -3.51923,-1.5 -5.30769,-1.15385z">
+                    </path>
+                </g>
+            </g>
+        </g>
+    </svg>
+    2FA
+    <button type="button" class="btn btn-outline-light btn-sm m-2" data-toggle="modal"
+        data-target="#exampleModalCenter">
+        See details
+    </button>
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">2FA Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your active key : <strong>{{ user.mfa.auth_key }}</strong> <br>
+                    Created at: {{ user.mfa.created_at|date:"f, d/m/Y " }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae, optio. Eaque, aspernatur animi nisi ad odit
+        consequatur. Perferendis consequatur illum, quibusdam voluptatem quasi ad soluta ex libero ipsum officiis
+        inventore!
+    </p>
+</div>
+
+
+{% endblock %}
